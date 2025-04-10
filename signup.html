@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BookMyShow - Sign Up</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">BookMyShow</a>
+      <a href="login.html" class="book-btn">Login</a>
+    </div>
+  </nav>
+
+  <div class="auth-container">
+    <div class="auth-scroll-wrapper">
+      <div class="auth-content">
+        <h1>Create Account</h1>
+        <form id="signupForm">
+          <div class="form-group">
+            <label for="signupName">Full Name</label>
+            <input type="text" id="signupName" required>
+            <div class="error-message" id="nameError"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="signupEmail">Email</label>
+            <input type="email" id="signupEmail" required>
+            <div class="error-message" id="emailError"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" required>
+            <div class="strength-meter"></div>
+            <div class="strength-text"></div>
+            <div class="password-rules">
+              <p>Password must contain:</p>
+              <ul>
+                <li id="rule-length">At least 8 characters</li>
+                <li id="rule-upper">One uppercase letter</li>
+                <li id="rule-lower">One lowercase letter</li>
+                <li id="rule-number">One number</li>
+                <li id="rule-special">One special character</li>
+              </ul>
+            </div>
+            <div class="error-message" id="passwordError"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" required>
+            <div class="error-message" id="confirmError"></div>
+          </div>
+          
+          <button type="submit" class="cta-btn">Create Account</button>
+        </form>
+        <p class="auth-switch">Already have an account? <a href="login.html">Sign in</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // DOM Elements
+      const form = document.getElementById('signupForm');
+      const nameInput = document.getElementById('signupName');
+      const emailInput = document.getElementById('signupEmail');
+      const passwordInput = document.getElementById('signupPassword');
+      const confirmInput = document.getElementById('confirmPassword');
+      const strengthMeter = document.querySelector('.strength-meter');
+      const strengthText = document.querySelector('.strength-text');
+      const nameError = document.getElementById('nameError');
+      const emailError = document.getElementById('emailError');
+      const passwordError = document.getElementById('passwordError');
+      const confirmError = document.getElementById('confirmError');
+
+      // Password rule elements
+      const ruleLength = document.getElementById('rule-length');
+      const ruleUpper = document.getElementById('rule-upper');
+      const ruleLower = document.getElementById('rule-lower');
+      const ruleNumber = document.getElementById('rule-number');
+      const ruleSpecial = document.getElementById('rule-special');
+
+      // Initialize users storage
+      let users = JSON.parse(localStorage.getItem('users')) || {};
+
+      // Validation Patterns
+      const patterns = {
+        name: /^[A-Za-zÀ-ÖØ-öø-ÿ\s']{2,30}$/,
+        email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+      };
+
+      // Strength Configuration
+      const strengthLevels = {
+        weak: { min: 0, color: '#dc3545', message: 'Weak - Add more complexity' },
+        medium: { min: 3, color: '#ffc107', message: 'Medium - Could be stronger' },
+        strong: { min: 5, color: '#28a745', message: 'Strong - Great password!' }
+      };
+
+      // Validation Functions
+      const showError = (input, errorElement, message) => {
+        input.classList.add('invalid');
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+      };
+
+      const showSuccess = (input, errorElement) => {
+        input.classList.remove('invalid');
+        errorElement.textContent = '';
+        errorElement.style.display = 'none';
+      };
+
+      const validateName = () => {
+        const value = nameInput.value.trim();
+        if (!value) {
+          showError(nameInput, nameError, 'Name is required');
+          return false;
+        }
+        if (!patterns.name.test(value)) {
+          showError(nameInput, nameError, 'Invalid name format (2-30 letters/spaces only)');
+          return false;
+        }
+        showSuccess(nameInput, nameError);
+        return true;
+      };
+
+      const validateEmail = () => {
+        const value = emailInput.value.trim();
+        if (!value) {
+          showError(emailInput, emailError, 'Email is required');
+          return false;
+        }
+        if (!patterns.email.test(value)) {
+          showError(emailInput, emailError, 'Invalid email format');
+          return false;
+        }
+        if (users[value]) {
+          showError(emailInput, emailError, 'Email already registered');
+          return false;
+        }
+        showSuccess(emailInput, emailError);
+        return true;
+      };
+
+      const updatePasswordRules = (password) => {
+        // Update each rule's visual state
+        ruleLength.classList.toggle('valid', password.length >= 8);
+        ruleUpper.classList.toggle('valid', /[A-Z]/.test(password));
+        ruleLower.classList.toggle('valid', /[a-z]/.test(password));
+        ruleNumber.classList.toggle('valid', /\d/.test(password));
+        ruleSpecial.classList.toggle('valid', /[^A-Za-z0-9]/.test(password));
+      };
+
+      const calculateStrength = (password) => {
+        let score = 0;
+        // Length contributes up to 2 points
+        if (password.length >= 8) score++;
+        if (password.length >= 12) score++;
+        // Character diversity
+        if (/[A-Z]/.test(password)) score++;
+        if (/[0-9]/.test(password)) score++;
+        if (/[^A-Za-z0-9]/.test(password)) score++;
+        // Penalize repetitive patterns
+        if (/(.)\1{2,}/.test(password)) score = Math.max(0, score - 2);
+        return score;
+      };
+
+      const updateStrengthDisplay = (password) => {
+        const score = calculateStrength(password);
+        let strength = 'weak';
+        
+        if (score >= strengthLevels.strong.min) {
+          strength = 'strong';
+        } else if (score >= strengthLevels.medium.min) {
+          strength = 'medium';
+        }
+
+        strengthMeter.style.backgroundColor = strengthLevels[strength].color;
+        strengthMeter.style.width = `${(score/5)*100}%`;
+        strengthText.textContent = strengthLevels[strength].message;
+        strengthText.style.color = strengthLevels[strength].color;
+      };
+
+      const validatePassword = () => {
+        const value = passwordInput.value;
+        if (!value) {
+          showError(passwordInput, passwordError, 'Password is required');
+          return false;
+        }
+        if (value.length < 8) {
+          showError(passwordInput, passwordError, 'Minimum 8 characters required');
+          return false;
+        }
+        
+        const score = calculateStrength(value);
+        if (score < strengthLevels.medium.min) {
+          showError(passwordInput, passwordError, 'Password is too weak');
+          return false;
+        }
+        
+        showSuccess(passwordInput, passwordError);
+        return true;
+      };
+
+      const validateConfirm = () => {
+        const value = confirmInput.value;
+        if (!value) {
+          showError(confirmInput, confirmError, 'Please confirm your password');
+          return false;
+        }
+        if (value !== passwordInput.value) {
+          showError(confirmInput, confirmError, 'Passwords don\'t match');
+          return false;
+        }
+        showSuccess(confirmInput, confirmError);
+        return true;
+      };
+
+      // Event Listeners
+      nameInput.addEventListener('input', validateName);
+      emailInput.addEventListener('input', validateEmail);
+      
+      passwordInput.addEventListener('input', function(e) {
+        const password = e.target.value;
+        updatePasswordRules(password);
+        updateStrengthDisplay(password);
+        validatePassword();
+        
+        // Validate confirmation when password changes
+        if (confirmInput.value) {
+          validateConfirm();
+        }
+      });
+      
+      confirmInput.addEventListener('input', validateConfirm);
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const isNameValid = validateName();
+        const isEmailValid = validateEmail();
+        const isPasswordValid = validatePassword();
+        const isConfirmValid = validateConfirm();
+        
+        if (isNameValid && isEmailValid && isPasswordValid && isConfirmValid) {
+          // Store user data (in production, you would hash the password)
+          users[emailInput.value.trim()] = {
+            name: nameInput.value.trim(),
+            password: passwordInput.value
+          };
+          
+          localStorage.setItem('users', JSON.stringify(users));
+          localStorage.setItem('isLoggedIn', 'true');
+          window.location.href = 'index.html';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

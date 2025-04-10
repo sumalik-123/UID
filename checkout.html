@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BookMyShow - Checkout</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">Book My Show</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="movies.html">Movies</a>
+      </div>
+      <a href="movies.html" class="book-btn">Book Tickets</a>
+    </div>
+  </nav>
+
+  <section class="checkout">
+    <div class="container">
+      <div id="checkout-form" class="checkout-grid">
+        <div class="checkout-form">
+          <h1>Checkout</h1>
+          
+          <form id="payment-form">
+            <div class="form-section">
+              <h2>Contact Information</h2>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="name">Full Name</label>
+                  <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                  <label for="phone">Phone</label>
+                  <input type="tel" id="phone" required>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-section">
+              <h2>Payment Details</h2>
+              <div class="form-group">
+                <label for="card-number">Card Number</label>
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+              </div>
+              
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="expiry">Expiry Date</label>
+                  <input type="text" id="expiry" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                  <label for="cvv">CVV</label>
+                  <input type="text" id="cvv" placeholder="123" required>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="card-name">Name on Card</label>
+                <input type="text" id="card-name" required>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" id="pay-btn" class="cta-btn">Pay 0.00/-</button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="booking-summary">
+          <h2>Booking Summary</h2>
+          
+          <div class="summary-details">
+            <div class="summary-item">
+              <span>Movie</span>
+              <span id="summary-movie">Movie Title</span>
+            </div>
+            <div class="summary-item">
+              <span>Date</span>
+              <span id="summary-date">Date</span>
+            </div>
+            <div class="summary-item">
+              <span>Time</span>
+              <span id="summary-time">Time</span>
+            </div>
+            <div class="summary-item">
+              <span>Theater</span>
+              <span id="summary-theater">Theater</span>
+            </div>
+            <div class="summary-item">
+              <span>Seats</span>
+              <span id="summary-seats">None selected</span>
+            </div>
+            <div class="summary-item">
+              <span>Tickets</span>
+              <span id="summary-tickets">0 x 0.00/-</span>
+            </div>
+            <div class="summary-item total">
+              <span>Total</span>
+              <span id="summary-total">0.00/-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="confirmation" class="confirmation hidden">
+        <div class="confirmation-container">
+          <div class="confirmation-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+          </div>
+          <h1>Booking Confirmed!</h1>
+          <p>Your tickets have been booked successfully.</p>
+          
+          <div class="confirmation-details">
+            <div class="confirmation-item">
+              <span>Booking ID</span>
+              <span id="booking-id">BOK1234</span>
+            </div>
+            <div class="confirmation-item">
+              <span>Movie</span>
+              <span id="conf-movie">Movie Title</span>
+            </div>
+            <div class="confirmation-item">
+              <span>Date & Time</span>
+              <span id="conf-datetime">Date at Time</span>
+            </div>
+            <div class="confirmation-item">
+              <span>Theater</span>
+              <span id="conf-theater">Theater</span>
+            </div>
+            <div class="confirmation-item">
+              <span>Seats</span>
+              <span id="conf-seats">A1, A2</span>
+            </div>
+            <div class="confirmation-item total">
+              <span>Total Paid</span>
+              <span id="conf-total">$0.00</span>
+            </div>
+          </div>
+          
+          <p class="confirmation-message">Your e-tickets have been sent to your email. You can show this confirmation page at the cinema.</p>
+          
+          <a href="index.html" class="cta-btn">Back to Home</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 BookMyShow. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Update auth button state
+    const authButton = document.getElementById('authButton');
+    if(localStorage.getItem('isLoggedIn')) {
+      authButton.querySelector('span').textContent = 'Logout';
+      authButton.href = 'javascript:void(0)';
+      authButton.onclick = () => {
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = 'login.html';
+      };
+    }
+  </script>
+</body>
+</html>

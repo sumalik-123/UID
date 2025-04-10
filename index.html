@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book My Show - Home</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">BookMyShow</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="movies.html">Movies</a>
+      </div>
+      <a href="login.html" class="book-btn" id="authButton">
+        <span>Login</span>
+      </a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Experience the magic of cinema</h1>
+        <p>Book your tickets online and enjoy the latest blockbusters in premium theaters</p>
+        <a href="movies.html" class="cta-btn">Browse Movies</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="featured">
+    <div class="container">
+      <h2>Featured Movies</h2>
+      <div class="movie-grid">
+        <div class="movie-card" data-id="1">
+          <div class="poster">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/robinhood.jpg-WQvbMd6yP7v8uup5pEnztAqQFxf9Jc.jpeg" alt="Robinhood">
+          </div>
+          <div class="movie-info">
+            <div class="tags">
+              <span>Action</span>
+              <span>Thriller</span>
+            </div>
+            <h3>Robinhood</h3>
+            <p>A journey of a thief who becomes a hero</p>
+            <div class="movie-meta">
+              <span>2h</span>
+              <a href="movie-details.html?id=1" class="book-now">Book Now</a>
+            </div>
+          </div>
+        </div>
+        <div class="movie-card" data-id="4">
+          <div class="poster">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/veera%20dheera%20sooran.jpg-z9O0OXRWX681yhNjja7Q7nmLdWVwyA.jpeg" alt="Veera Dheera Sooran">
+          </div>
+          <div class="movie-info">
+            <div class="tags">
+              <span>Action</span>
+              <span>Historical</span>
+            </div>
+            <h3>Veera Dheera Sooran</h3>
+            <p>An epic historical action drama starring Chiyaan Vikram</p>
+            <div class="movie-meta">
+              <span>2h 30m</span>
+              <a href="movie-details.html?id=4" class="book-now">Book Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="center">
+        <a href="movies.html" class="view-all">View All Movies</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 BookMyShow. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Update auth button state
+    const authButton = document.getElementById('authButton');
+    if(localStorage.getItem('isLoggedIn')) {
+      authButton.querySelector('span').textContent = 'Logout';
+      authButton.href = 'javascript:void(0)';
+      authButton.onclick = () => {
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = 'login.html';
+      };
+    }
+  </script>
+</body>
+</html>

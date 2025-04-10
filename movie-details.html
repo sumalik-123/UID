@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BookMyShow - Movie Details</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">Book My Show</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="movies.html">Movies</a>
+      </div>
+      <a href="movies.html" class="book-btn">Book Tickets</a>
+    </div>
+  </nav>
+
+  <div class="movie-backdrop"></div>
+
+  <section class="movie-details">
+    <div class="container">
+      <div class="movie-info-grid">
+        <div class="movie-poster">
+          <!-- Movie poster will be inserted here by JavaScript -->
+        </div>
+        <div class="movie-info-content">
+          <!-- Movie info will be inserted here by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="showtimes">
+    <div class="container">
+      <h2>Select Showtime</h2>
+      
+      <div class="date-selector">
+        <!-- Date buttons will be inserted here by JavaScript -->
+      </div>
+      
+      <div class="time-selector">
+        <h3>Available Times</h3>
+        <div class="time-grid">
+          <!-- Time buttons will be inserted here by JavaScript -->
+        </div>
+      </div>
+      
+      <div class="booking-action">
+        <button id="continue-btn" class="cta-btn" disabled>Continue to Seat Selection</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 BookMyShow. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Update auth button state
+    const authButton = document.getElementById('authButton');
+    if(localStorage.getItem('isLoggedIn')) {
+      authButton.querySelector('span').textContent = 'Logout';
+      authButton.href = 'javascript:void(0)';
+      authButton.onclick = () => {
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = 'login.html';
+      };
+    }
+  </script>
+</body>
+</html>

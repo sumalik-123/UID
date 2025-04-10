@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BookMyShow- Seat Selection</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">BookMyShow</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="movies.html">Movies</a>
+      </div>
+      <a href="movies.html" class="book-btn">Book Tickets</a>
+    </div>
+  </nav>
+
+  <section class="booking-info">
+    <div class="container">
+      <h1 id="movie-title">Movie Title</h1>
+      <div class="booking-meta">
+        <span id="show-date">Date</span>
+        <span>•</span>
+        <span id="show-time">Time</span>
+        <span>•</span>
+        <span id="show-theater">Theater</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="seat-selection">
+    <div class="container">
+      <div class="selection-container">
+        <div class="screen-container">
+          <div class="screen"></div>
+          <p>Screen</p>
+        </div>
+        
+        <div class="seats-grid">
+          <!-- Seats will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="seat-legend">
+          <div class="legend-item">
+            <div class="seat-example available"></div>
+            <span>Available</span>
+          </div>
+          <div class="legend-item">
+            <div class="seat-example selected"></div>
+            <span>Selected</span>
+          </div>
+          <div class="legend-item">
+            <div class="seat-example reserved"></div>
+            <span>Reserved</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="booking-summary">
+        <h2>Booking Summary</h2>
+        
+        <div class="summary-details">
+          <div class="summary-item">
+            <span>Movie</span>
+            <span id="summary-movie">Movie Title</span>
+          </div>
+          <div class="summary-item">
+            <span>Date</span>
+            <span id="summary-date">Date</span>
+          </div>
+          <div class="summary-item">
+            <span>Time</span>
+            <span id="summary-time">Time</span>
+          </div>
+          <div class="summary-item">
+            <span>Theater</span>
+            <span id="summary-theater">Theater</span>
+          </div>
+          <div class="summary-item">
+            <span>Seats</span>
+            <span id="summary-seats">None selected</span>
+          </div>
+          <div class="summary-item">
+            <span>Price per ticket</span>
+            <span id="summary-price">0.00/-</span>
+          </div>
+          <div class="summary-item total">
+            <span>Total</span>
+            <span id="summary-total">0.00/-</span>
+          </div>
+        </div>
+        
+        <button id="checkout-btn" class="cta-btn" disabled>Checkout (0.00/-)</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 BookMyShow. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Update auth button state
+    const authButton = document.getElementById('authButton');
+    if(localStorage.getItem('isLoggedIn')) {
+      authButton.querySelector('span').textContent = 'Logout';
+      authButton.href = 'javascript:void(0)';
+      authButton.onclick = () => {
+        localStorage.removeItem('isLoggedIn');
+        window.location.href = 'login.html';
+      };
+    }
+  </script>
+</body>
+</html>
